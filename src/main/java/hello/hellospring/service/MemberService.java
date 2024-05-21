@@ -11,7 +11,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    
+
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
@@ -22,19 +22,9 @@ public class MemberService {
      * */
     public Long join(Member member) {
 
-        long start = System.currentTimeMillis();
-
-        try {
-            validateDuplicateMember(member); // 중복 회원 검증
-
-            memberRepository.save(member);
-            return member.getId();
-        } finally {
-            long finish = System.currentTimeMillis();
-            long timeMs = finish - start;
-            System.out.println("join" + timeMs + "ms");
-        }
-
+        validateDuplicateMember(member); // 중복 회원 검증
+        memberRepository.save(member);
+        return member.getId();
 
     }
 
@@ -46,8 +36,8 @@ public class MemberService {
     }
 
     /*
-    * 전체 회원 조회
-    * */
+     * 전체 회원 조회
+     * */
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
